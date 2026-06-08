@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GROUP 12 PORTAL - SWD 413</title>
+    <style>
+        :root {
+            --primary-green: #1b4d3e;
+            --accent-green: #2ecc71;
+            --light-green: #e8f5e9;
+            --dark-text: #2c3e50;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Fixes mobile tap flicker */
+        }
+
+        body {
+            background-color: #f4f7f5;
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        /* Portal Header */
+        header {
+            background-color: var(--primary-green);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--accent-green);
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        header h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        header .course-code {
+            display: inline-block;
+            background-color: var(--accent-green);
+            color: var(--primary-green);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* Container & Meta Info */
+        .container {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .course-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            background: var(--white);
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--primary-green);
+        }
+
+        .meta-item span {
+            display: block;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+
+        .meta-item strong {
+            font-size: 1rem;
+            color: var(--primary-green);
+        }
+
+        /* Main Syllabus Grid Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Navigation Sidebar */
+        .sidebar {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h3 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-green);
+        }
+
+        .nav-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 0.95rem;
+            color: var(--dark-text);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            font-weight: bold;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        /* Responsive Breakpoint for Mobile Screens */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr; /* Stack navigation above content */
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+            header h1 { font-size: 1.8rem; }
+        }
+
+        /* Content Area Modules */
+        .content-area {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .objective-section {
+            display: none;
+        }
+
+        .objective-section.active {
+            display: block;
+        }
+
+        .obj-header {
+            color: var(--primary-green);
+            border-bottom: 3px solid var(--accent-green);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Syllabus Layout Grid/Table */
+        .grid-table {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .grid-row {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 1.2rem;
+        }
+
+        .weeks-badge {
+            display: inline-block;
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.2rem 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+        }
+
+        .content-block {
+            margin-bottom: 1rem;
+        }
+
+        .content-block h4 {
+            color: var(--primary-green);
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .content-block p, .content-block ul {
+            font-size: 0.95rem;
+            padding-left: 1.2rem;
+        }
+
+        /* Assessment Table */
+        .assessment-table-wrapper {
+            width: 100%;
+            overflow-x: auto; /* Allows table to scroll horizontally on small screens instead of breaking */
+        }
+
+        .assessment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            min-width: 500px; 
+        }
+
+        .assessment-table th, .assessment-table td {
+            border: 1px solid #e0e0e0;
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        .assessment-table th {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .assessment-table tr:nth-child(even) {
+            background-color: var(--light-green);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background-color: var(--primary-green);
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GROUP 12 PORTAL</h1>
+        <h2>FRONTEND DEVELOPMENT II</h2>
+        <div class="course-code">SWD 413</div>
+    </header>
+
+    <div class="container">
+        <div class="course-meta">
+            <div class="meta-item"><span>Programme</span><strong>HND Software & Web Dev</strong></div>
+            <div class="meta-item"><span>Year / Semester</span><strong>Year II / Sem I</strong></div>
+            <div class="meta-item"><span>Credit Units</span><strong>3 Units (6 Hrs/wk)</strong></div>
+            <div class="meta-item"><span>Prerequisite</span><strong>SWD323</strong></div>
+        </div>
+
+        <div class="main-content">
+            <nav class="sidebar">
+                <h3>Course Outline</h3>
+                <button class="nav-btn active" onclick="switchTab(event, 'obj1')">1. DOM Manipulation</button>
+                <button class="nav-btn" onclick="switchTab(event, 'obj2')">2. Events & Handling</button>
+                <button class="nav-btn" onclick="switchTab(event, 'obj3')">3. Error Handling</button>
+                <button class="nav-btn" onclick="switchTab(event, 'obj4')">4. Backend APIs</button>
+                <button class="nav-btn" onclick="switchTab(event, 'obj5')">5. Frameworks</button>
+                <button class="nav-btn" onclick="switchTab(event, 'assessment')">Assessment Scheme</button>
+            </nav>
+
+            <main class="content-area">
+                <section id="obj1" class="objective-section active">
+                    <h3 class="obj-header">General Objective 1.0: Know how to Manipulate The Document Object Model</h3>
+                    <div class="grid-table">
+                        <div class="grid-row">
+                            <span class="weeks-badge">Weeks 1 - 2</span>
+                            <div class="content-block">
+                                <h4>Theoretical Content</h4>
+                                <ul>
+                                    <li>Explain the DOM tree structure and web document rendering.</li>
+                                    <li>Explain DOM inheritance and node relationships.</li>
+                                    <li>Describe element selectors: <code>getElementById</code>, <code>getElementsByClassName</code>, <code>querySelector</code>, and <code>createElement</code>.</li>
+                                </ul>
+                            </div>
+                            <div class="content-block">
+                                <h4>Practical Content</h4>
+                                <p>Utilize DOM traversal methods to navigate parent, child, and sibling nodes. Practice dynamic text, attribute, and style updates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="obj2" class="objective-section">
+                    <h3 class="obj-header">General Objective 2.0: Understand Events and Event Handling</h3>
+                    <div class="grid-table">
+                        <div class="grid-row">
+                            <span class="weeks-badge">Weeks 3 - 5</span>
+                            <div class="content-block">
+                                <h4>Theoretical Content</h4>
+                                <ul>
+                                    <li>Analyze event propagation (capturing and bubbling phases).</li>
+                                    <li>Identify user interface triggers (clicks, keyboard inputs, mouse hovers).</li>
+                                    <li>Study event listeners, callback execution, and <code>preventDefault()</code> usage.</li>
+                                </ul>
+                            </div>
+                            <div class="content-block">
+                                <h4>Practical Content</h4>
+                                <p>Attach functional event listeners to HTML components. Build responsive elements using event callback chains and manage default event behaviors.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="obj3" class="objective-section">
+                    <h3 class="obj-header">General Objective 3.0: Comprehend the Basics of Error Handling and Logging</h3>
+                    <div class="grid-table">
+                        <div class="grid-row">
+                            <span class="weeks-badge">Weeks 6 - 8</span>
+                            <div class="content-block">
+                                <h4>Theoretical Content</h4>
+                                <ul>
+                                    <li>Classify types of JavaScript errors: syntax, runtime, and logical errors.</li>
+                                    <li>Deconstruct Exception Handling architecture using <code>try</code> and <code>catch</code> logic.</li>
+                                    <li>Discuss security benefits and returning human-readable messages.</li>
+                                </ul>
+                            </div>
+                            <div class="content-block">
+                                <h4>Practical Content</h4>
+                                <p>Develop documentation identifying application error states. Implement robust error boundaries utilizing <code>try</code>, <code>catch</code>, and <code>finally</code> blocks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="obj4" class="objective-section">
+                    <h3 class="obj-header">General Objective 4.0: Know How to Consume Backend APIs</h3>
+                    <div class="grid-table">
+                        <div class="grid-row">
+                            <span class="weeks-badge">Weeks 9 - 14</span>
+                            <div class="content-block">
+                                <h4>Theoretical Content</h4>
+                                <ul>
+                                    <li>Define JSON objects and master Serialization mechanisms.</li>
+                                    <li>Study HTTP Request methods: GET, POST, PUT, PATCH, and DELETE.</li>
+                                    <li>Analyze the JavaScript Fetch API and asynchronous promise paradigms.</li>
+                                    <li>Review REST architectural principles for network engineering.</li>
+                                </ul>
+                            </div>
+                            <div class="content-block">
+                                <h4>Practical Content</h4>
+                                <p>Generate standards-compliant dummy JSON schema models. Execute structural network requests to external public API services while managing async rendering streams seamlessly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="obj5" class="objective-section">
+                    <h3 class="obj-header">General Objective 5.0: Know the Various Frontend Libraries and Frameworks</h3>
+                    <div class="grid-table">
+                        <div class="grid-row">
+                            <span class="weeks-badge">Week 15</span>
+                            <div class="content-block">
+                                <h4>Theoretical Content</h4>
+                                <ul>
+                                    <li>Distinguish differences between utility Libraries vs structural Frameworks.</li>
+                                    <li>Evaluate modern ecosystem libraries (React, jQuery) and popular framework architectures (Vue, Angular).</li>
+                                    <li>Examine efficiency trade-offs and rapid production scaling versus raw native development.</li>
+                                </ul>
+                            </div>
+                            <div class="content-block">
+                                <h4>Practical Content</h4>
+                                <p>Conduct case studies on architecture selections based on performance constraints and organizational scope limits.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="assessment" class="objective-section">
+                    <h3 class="obj-header">Performance Evaluation Grading Criteria</h3>
+                    <div class="assessment-table-wrapper">
+                        <table class="assessment-table">
+                            <thead>
+                                <tr>
+                                    <th>Type of Assessment</th>
+                                    <th>Purpose and Nature of Assessment</th>
+                                    <th>Weighting (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Examination</strong></td>
+                                    <td>Final Examination (written) to assess knowledge and understanding.</td>
+                                    <td>40%</td>
+                                }
+                                </tr>
+                                <tr>
+                                    <td><strong>Test</strong></td>
+                                    <td>At least 2 progress tests administered for continuous iteration feedback.</td>
+                                    <td>10%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Practical</strong></td>
+                                    <td>At least 5 hands-on laboratory exercises directly assessed by instructor.</td>
+                                    <td>50%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Score</strong></td>
+                                    <td><strong>Comprehensive Cumulative Evaluation Portfolio</strong></td>
+                                    <td><strong>100%</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Higher National Diploma - Software and Web Development Portal</p>
+    </footer>
+
+    <script>
+        // Explicitly catching the execution event to satisfy mobile engines
+        function switchTab(evt, sectionId) {
+            // Remove active classes from buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Remove active classes from content sections
+            document.querySelectorAll('.objective-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Set current clicked element to active safely
+            evt.currentTarget.classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Auto scroll smoothly to the content section on mobile devices
+            if(window.innerWidth <= 768) {
+                document.querySelector('.content-area').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
